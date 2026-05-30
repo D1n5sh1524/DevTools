@@ -27,9 +27,9 @@ class BinaryConvertorTab(ttk.Frame):
         radio_frame = ttk.Frame(frame)
         radio_frame.pack(side=tk.TOP, fill=tk.X, padx=5)
 
-        ttk.Radiobutton(radio_frame, text="Binary", variable=self.conversion_var, value='binary').pack(side=tk.LEFT, padx=5)
-        ttk.Radiobutton(radio_frame, text="Hexadecimal", variable=self.conversion_var, value='hexadecimal').pack(side=tk.LEFT, padx=5)
-        ttk.Radiobutton(radio_frame, text="Base64", variable=self.conversion_var, value='base64').pack(side=tk.LEFT, padx=5)
+        ttk.Radiobutton(radio_frame, text="Binary Text", variable=self.conversion_var, value='binary').pack(side=tk.TOP, padx=20)
+        ttk.Radiobutton(radio_frame, text="Hexadecimal", variable=self.conversion_var, value='hexadecimal').pack(side=tk.TOP, padx=20)
+        ttk.Radiobutton(radio_frame, text="Base64", variable=self.conversion_var, value='base64').pack(side=tk.TOP, padx=20)
 
         # Convert button
         convert_button = ttk.Button(frame, text="Convert", command=self.convert_image)
@@ -45,7 +45,7 @@ class BinaryConvertorTab(ttk.Frame):
 
         copy_button = ttk.Button(result_frame, text="Copy", command=self.copy_to_clipboard)
         copy_button.config(style="TButton")
-        copy_button.pack(side=tk.RIGHT, padx=5, pady=5)
+        copy_button.pack(side=tk.TOP, padx=5, pady=5)
 
         # Style for buttons
         style = ttk.Style()

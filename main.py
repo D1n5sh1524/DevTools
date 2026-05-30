@@ -14,6 +14,7 @@ from json_tab    import JsonTab
 from compare_tab import CompareTab
 from qr_tab      import QRCodeTab
 from binary_convertor_tab import BinaryConvertorTab
+from uuid_generator_tab import UUIDGeneratorTab 
 
 
 def main():
@@ -48,6 +49,7 @@ def main():
     nb.add(CompareTab(nb), text="   ≠   Text Compare   ")
     nb.add(QRCodeTab(nb),  text="   ⊞  QR Code Generator   ")
     nb.add(BinaryConvertorTab(nb, root), text="   ⊞  Binary Convertor   ")
+    nb.add(UUIDGeneratorTab(nb, root), text="   ⊞  UUID Generator   ")
 
     root.mainloop()
 
