@@ -12,45 +12,56 @@ from PIL import ImageTk
 class QRCodeTab(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        self._build()
+        self.parent = parent
+        self.init_ui()
 
-    def _build(self):
-        self.url_var = tk.StringVar()
+    def init_ui(self):
+        # Create a frame for the QR code display and controls
+        qr_frame = ttk.Frame(self)
+        qr_frame.pack(fill=tk.BOTH, expand=True)
 
-        ttk.Label(self, text="Enter a URL:").grid(
-            row=0, column=0, padx=10, pady=5)
-        ttk.Entry(self, textvariable=self.url_var, width=50).grid(
-            row=0, column=1, padx=10, pady=5)
+        # Label to display the QR code image
+        self.qr_label = tk.Label(qr_frame)
+        self.qr_label.pack(fill=tk.BOTH, expand=True)
 
-        ttk.Button(self, text="Generate QR Code",
-                   command=self.generate).grid(
-            row=1, column=0, columnspan=2, padx=10, pady=5)
+        # Entry widget for input text
+        self.text_entry = ttk.Entry(qr_frame)
+        self.text_entry.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
 
-        self.qr_label = ttk.Label(self, background="white")
-        self.qr_label.grid(row=2, column=0, columnspan=2, padx=10, pady=5)
+        # Button to generate QR code
+        self.generate_button = ttk.Button(qr_frame, text="Generate QR Code", command=self.generate_qr_code)
+        self.generate_button.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
 
-    # ── action ───────────────────────────────────────────────────────────────
-    def generate(self):
-        url = self.url_var.get().strip()
-        if not url:
-            messagebox.showerror("Error", "Please enter a URL")
-            return
+        # Button to download QR code
+        self.download_button = ttk.Button(qr_frame, text="Download QR Code", command=self.download_qr_code)
+        self.download_button.pack(side=tk.TOP, fill=tk.X, padx=10, pady=5)
 
+    def generate_qr_code(self):
+        text = self.text_entry.get()
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
             box_size=10,
             border=4,
         )
-        qr.add_data(url)
+        qr.add_data(text)
         qr.make(fit=True)
 
-        img = qr.make_image(fill="black", back_color="white")
+        img = qr.make_image(fill='black', back_color='white')
+        self.photo = ImageTk.PhotoImage(img)
+        self.qr_label.config(image=self.photo)
 
-        buf   = BytesIO()
-        img.save(buf, format="PNG")
-        buf.seek(0)
-        photo = ImageTk.PhotoImage(data=buf.read())
+    def download_qr_code(self):
+        text = self.text_entry.get()
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(text)
+        qr.make(fit=True)
 
-        self.qr_label.config(image=photo)
-        self.qr_label.image = photo   # keep reference alive
+        img = qr.make_image(fill='black', back_color='white')
+        img.save("qr_code.png")
+        tk.messagebox.showinfo("Download", "QR code downloaded as 'qr_code.png'")
