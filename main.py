@@ -15,7 +15,7 @@ from compare_tab      import CompareTab
 from qr_tab           import QRCodeTab
 from binary_convertor_tab import BinaryConvertorTab
 from uuid_generator_tab   import UUIDGeneratorTab
-
+from toon_tab         import ToonTab
 
 # ── Tool registry — add new tools here only ───────────────────────────────────
 def _build_tool_registry(nb, root):
@@ -26,6 +26,7 @@ def _build_tool_registry(nb, root):
         ("⊞  QR Code Generator",   QRCodeTab(nb)),
         ("⊞  Binary Convertor",    BinaryConvertorTab(nb, root)),
         ("⊞  UUID Generator",      UUIDGeneratorTab(nb, root)),
+        ("{[]}  TOON Formatter",    ToonTab(nb)),
     ]
 
 
