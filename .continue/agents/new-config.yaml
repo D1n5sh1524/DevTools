@@ -1,0 +1,23 @@
+name: new-config
+version: 1.0.0
+schema: v1
+
+models:
+  - name: Gemma 3 4B
+    provider: ollama
+    model: gemma3:4b
+    apiBase: http://localhost:11434
+
+mcpServers:
+  - name: filesystem
+    command: npx
+    args:
+      - -y
+      - "@modelcontextprotocol/server-filesystem"
+      - "/Users/apple/Projects"
+
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
