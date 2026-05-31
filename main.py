@@ -24,8 +24,8 @@ def _build_tool_registry(nb, root):
         ("{ }  JSON Formatter",    JsonTab(nb)),
         ("≠   Text Compare",       CompareTab(nb)),
         ("⊞  QR Code Generator",   QRCodeTab(nb)),
-        ("⊞  Binary Convertor",    BinaryConvertorTab(nb, root)),
-        ("⊞  UUID Generator",      UUIDGeneratorTab(nb, root)),
+        ("01  Binary Convertor",    BinaryConvertorTab(nb, root)),
+        ("UUID Generator",      UUIDGeneratorTab(nb, root)),
         ("{[]}  TOON Formatter",    ToonTab(nb)),
     ]
 
@@ -106,7 +106,7 @@ def main():
 
     tk.Label(hdr, text="⬡  DevTools", bg=HDR_BG, fg=ACCENT,
              font=("Segoe UI", 15, "bold")).pack(side=tk.LEFT, padx=18)
-    tk.Label(hdr, text="by Dinesh, using open source AI",
+    tk.Label(hdr, text="building with AI",
              bg=HDR_BG, fg=FG_DIM, font=("Segoe UI", 10)).pack(side=tk.LEFT)
     tk.Label(hdr,
              text="Ctrl+Z = undo  ·  Ctrl+Enter = run  ·  100% local",
