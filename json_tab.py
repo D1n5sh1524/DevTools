@@ -107,12 +107,53 @@ class JsonTab(ttk.Frame):
             self.out.tag_add("null", f"1.0+{m.start()}c", f"1.0+{m.end()}c")
 
     # ── actions ───────────────────────────────────────────────────────────────
+    @staticmethod
+    def _try_parse(raw):
+        """Attempt to parse JSON, handling escaped-quote strings and single-quoted JSON."""
+        # 1. Try direct parse
+        try:
+            result = json.loads(raw)
+            # If json.loads returned a plain string, it might be double-encoded JSON
+            if isinstance(result, str):
+                try:
+                    return json.loads(result)
+                except (json.JSONDecodeError, ValueError):
+                    pass
+            return result
+        except json.JSONDecodeError:
+            pass
+
+        # 2. If wrapped in quotes (e.g. copied from a string literal), strip them
+        stripped = raw.strip()
+        if (stripped.startswith('"') and stripped.endswith('"')) or \
+           (stripped.startswith("'") and stripped.endswith("'")):
+            stripped = stripped[1:-1]
+        else:
+            stripped = raw
+
+        # 3. Try unescaping \" → " and \\ → \ (common in log output / code strings)
+        unescaped = stripped.replace('\\"', '"').replace('\\\\', '\\')
+        try:
+            return json.loads(unescaped)
+        except json.JSONDecodeError:
+            pass
+
+        # 4. Try replacing single quotes with double quotes (Python repr style)
+        single_fixed = stripped.replace("'", '"')
+        try:
+            return json.loads(single_fixed)
+        except json.JSONDecodeError:
+            pass
+
+        # 5. Nothing worked — raise from the original input for a clear error
+        return json.loads(raw)
+
     def fmt(self):
         raw = self.inp.get("1.0", tk.END).strip()
         if not raw:
             return
         try:
-            data = json.loads(raw)
+            data = self._try_parse(raw)
             out  = json.dumps(data, indent=self.indent_var.get(),
                               sort_keys=self.sort_var.get(), ensure_ascii=False)
             self._write_output(out)
@@ -129,7 +170,7 @@ class JsonTab(ttk.Frame):
         if not raw:
             return
         try:
-            data = json.loads(raw)
+            data = self._try_parse(raw)
             mini = json.dumps(data, separators=(",", ":"), ensure_ascii=False)
             self._write_output(mini, highlight=False)
             self._set_status(f"✓  Minified  ·  {len(mini)} chars", STATUS_OK)
