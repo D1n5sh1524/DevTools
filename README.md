@@ -9,6 +9,7 @@ Welcome to DevTools, a collection of tools for various development tasks. This p
 - **QR Code Generator**: Generate QR codes from text or URLs.
 - **Binary Conversion**: Convert images to different binary formats (binary, hexadecimal, base64).
 - **UUID Generator**: Generate unique UUIDs and keep a history.
+- **Image Resizer**: Resize images with custom width, height, aspect ratio lock, and resampling filter.
 
 ## Installation
 
@@ -59,6 +60,14 @@ Welcome to DevTools, a collection of tools for various development tasks. This p
    - Open the project in your preferred IDE or text editor.
    - Navigate to the UUID Generator tab.
    - Click "Generate UUID" to generate a new UUID, then click "Copy" to copy it to your clipboard.
+
+6. **Image Resizer**:
+   - Navigate to the Image Resizer tab.
+   - Click "Browse..." to select an image from your computer.
+   - Set the desired Width or Height. Toggle "Keep Aspect Ratio" to lock or unlock dimensions relative to original.
+   - Select a Resampling option (Nearest, Bilinear, Bicubic, Lanczos).
+   - Click "Resize Image" to preview.
+   - Click "Save Resized Image..." to download the final image.
 
 ## Contributing
 

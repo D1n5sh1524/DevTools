@@ -16,6 +16,8 @@ from qr_tab           import QRCodeTab
 from binary_convertor_tab import BinaryConvertorTab
 from uuid_generator_tab   import UUIDGeneratorTab
 from toon_tab         import ToonTab
+from image_resizer_tab    import ImageResizerTab
+from jwt_tab              import JWTTab
 
 # ── Tool registry — add new tools here only ───────────────────────────────────
 def _build_tool_registry(nb, root):
@@ -27,6 +29,8 @@ def _build_tool_registry(nb, root):
         ("01  Binary Convertor",    BinaryConvertorTab(nb, root)),
         ("UUID Generator",      UUIDGeneratorTab(nb, root)),
         ("{[]}  TOON Formatter",    ToonTab(nb)),
+        ("🖼️  Image Resizer",       ImageResizerTab(nb)),
+        ("🔑  JWT Tool",            JWTTab(nb)),
     ]
 
 
@@ -42,7 +46,7 @@ class ToolPickerPopup(tk.Toplevel):
         self.grab_set()                       # modal
         self.on_apply = on_apply
 
-        tk.Label(self, text="Visible tabs", bg=HDR_BG, fg=ACCENT,
+        tk.Label(self, text="Visible tabs", bg=HDR_BG, fg=ACCENT,# Unchanged label
                  font=("Segoe UI", 11, "bold")).pack(padx=16, pady=(12, 6))
 
         ttk.Separator(self).pack(fill=tk.X, padx=8)
@@ -54,7 +58,7 @@ class ToolPickerPopup(tk.Toplevel):
         for label in tool_labels:
             var = tk.BooleanVar(value=(label in visible_set))
             cb  = tk.Checkbutton(frame, text=f"  {label}", variable=var,
-                                 bg=HDR_BG, fg="white", selectcolor=HDR_BG,
+                                 bg=HDR_BG, fg=ACCENT, selectcolor=HDR_BG,
                                  activebackground=HDR_BG, activeforeground=ACCENT,
                                  font=("Segoe UI", 10), anchor="w")
             cb.pack(fill=tk.X, pady=2)
